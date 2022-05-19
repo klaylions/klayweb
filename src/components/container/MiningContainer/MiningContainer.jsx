@@ -2,14 +2,20 @@ import React from "react";
 
 import * as S from "./style";
 
-import { NotMiningWrap, MiningWrap, ConnectModal } from "../../../components";
+import {
+  NotMiningWrap,
+  MiningWrap,
+  ConnectModal,
+  LockUpWrap,
+} from "../../../components";
 import { useStakingNft } from "../../../hooks/staking";
 import { ADDRESSES } from "../../../contants/addresses";
 import { useAddress } from "../../../hooks/web3/web3-context";
 
 const MiningContainer = () => {
   const [isModalToggle, setIsModalToggle] = React.useState(false);
-  const { getWalletNft, stake, refresh, getStakedNft, claim, unstake } = useStakingNft();
+  const { getWalletNft, stake, refresh, getStakedNft, claim, unstake } =
+    useStakingNft();
 
   React.useEffect(() => {
     if (window.localStorage.getItem("isModalToggle") == "false") {
@@ -48,6 +54,11 @@ const MiningContainer = () => {
               claim={claim}
               unstake={unstake}
             />
+          </S.DIV>
+        </S.Inner>
+        <S.Inner>
+          <S.DIV>
+            <LockUpWrap />
           </S.DIV>
         </S.Inner>
       </S.Wrap>

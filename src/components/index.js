@@ -16,8 +16,10 @@ export { default as Sns } from "./wrapper/SNS/SnsWrapper";
 export { default as ConnectModal } from "./wrapper/ConnectModal/ConnectModal";
 export { default as NotMiningWrap } from "./wrapper/NotMiningWrap/NotMiningWrap";
 export { default as MiningWrap } from "./wrapper/MiningWrap/MiningWrap";
+export { default as LockUpWrap } from "./wrapper/LockUpWrap/LockUpWrap";
 export { default as MiningModal } from "./wrapper/MiningModal/MiningModal";
 export { default as UnMiningModal } from "./wrapper/UnMiningModal/UnMiningModal";
+export { default as LockUpModal } from "./wrapper/LockUpModal/LockUpModal";
 export { default as LionsBallWrap } from "./wrapper/LionsBallWrap/LionsBallWrap";
 
 export { default as ConnectContainer } from "./container/ConnectContainer/ConnectContainer";

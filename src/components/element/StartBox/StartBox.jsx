@@ -4,7 +4,6 @@ import * as S from "./style";
 
 const StartBox = ({ list, setList, idx, data }) => {
   const { text1, klc, text2 } = data || {};
-
   return (
     <S.Box>
       <S.Container

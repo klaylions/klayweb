@@ -138,3 +138,141 @@ export const miningData2 = [
     text2: "option",
   },
 ];
+
+export const miningData3 = [
+  {
+    id: 1,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 2,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 3,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 4,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 5,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 6,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 7,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 8,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 9,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 10,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 11,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 12,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 13,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 14,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+  {
+    id: 15,
+    isMining: false,
+    isActive: false,
+    text1: "option",
+    uri: {
+      image: "https://klaylions.s3.ap-northeast-2.amazonaws.com/image/1.png",
+    },
+  },
+];
