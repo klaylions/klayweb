@@ -186,7 +186,7 @@ export const Web3ContextProvider = ({ children }) => {
         setProvider(new Web3Provider(rawProvider, "any"));
       }
 
-      setProviderWrapper(connectedProvider);
+      setProviderWrapper(new Caver(window?.klaytn));
 
       setConnected(true);
 

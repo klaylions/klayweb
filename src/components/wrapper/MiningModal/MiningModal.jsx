@@ -1,9 +1,10 @@
 import React from "react";
 import Modal from "react-modal";
+import { ADDRESSES } from "../../../contants/addresses";
 
 import * as S from "./style";
 
-const MiningModal = ({ onModal, closeModal }) => {
+const MiningModal = ({ selected, onModal, closeModal, stake }) => {
   const customStyle = {
     overlay: {
       top: 0,
@@ -46,19 +47,19 @@ const MiningModal = ({ onModal, closeModal }) => {
         </S.Close>
         <S.H2>Are you sure to staking?</S.H2>
         <S.Ul>
-          {new Array(8).fill("").map((_, index) => (
+          {selected.map((_, index) => (
             <S.Li>
-              <S.Text>Text</S.Text>
+              <S.Text>KLAYLIONS</S.Text>
               <S.Right>
-                <S.RLeft>Text</S.RLeft>
-                <S.RRight>5 NFT</S.RRight>
+                <S.RLeft>ID</S.RLeft>
+                <S.RRight>{_.id}</S.RRight>
               </S.Right>
             </S.Li>
           ))}
         </S.Ul>
         <S.TotalBox>
           <S.TotalTitle>Total</S.TotalTitle>
-          <S.TotalText>TEXT AREA</S.TotalText>
+          <S.TotalText>{selected.length}</S.TotalText>
         </S.TotalBox>
         <S.AlertTextBox>
           <S.AlertText>
@@ -79,7 +80,17 @@ const MiningModal = ({ onModal, closeModal }) => {
             </S.AlertMent>
           </S.AlertText>
         </S.AlertTextBox>
-        <S.Btn onClick={() => closeModal()}>Stake</S.Btn>
+        <S.Btn
+          onClick={async () => {
+            await stake(
+              ADDRESSES.KLNFT,
+              selected.map((e) => e.id)
+            );
+            closeModal();
+          }}
+        >
+          Stake
+        </S.Btn>
       </S.Container>
     </Modal>
   );

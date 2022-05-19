@@ -4,18 +4,33 @@ import * as S from "./style";
 
 import { StartBox, UnMiningModal } from "../..";
 import { miningData2 } from "../../../mock/miningDummy";
-const MiningWrap = () => {
+import { useStakingNft } from "../../../hooks/staking";
+import { useAddress } from "../../../hooks/web3/web3-context";
+import { ADDRESSES } from "../../../contants/addresses";
+const MiningWrap = ({ getStakedNft, refresh, claim, unstake }) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   const [isModal, setIsModal] = useState(false);
 
-  useEffect(() => {
-    setList(miningData2);
+  const address = useAddress();
 
-    return () => {
-      setList([]);
-    };
-  }, []);
+  useEffect(() => {
+    if (!address) return;
+    getStakedNft(ADDRESSES.KLNFT).then((res) => {
+      let walletList = [];
+      console.log(res);
+      res.ids.forEach((id, i) => {
+        walletList.push({
+          id,
+          isActive: false,
+          uri: res.uris[i],
+          earned: res.earned[i],
+        });
+      });
+      setList(walletList);
+    });
+    // res.ids.}
+  }, [address, refresh]);
 
   useEffect(() => {
     let result = list.filter((item) => item.isActive);
@@ -25,13 +40,27 @@ const MiningWrap = () => {
 
   return (
     <S.Container>
-      <UnMiningModal closeModal={() => setIsModal(false)} onModal={isModal} />
+      <UnMiningModal
+        selected={list.filter((e) => e.isActive === true)}
+        closeModal={() => setIsModal(false)}
+        onModal={isModal}
+        unstake={unstake}
+      />
       <S.Top>
         <S.H2>MINING~</S.H2>
         <S.Icon>
           <img src="/assets/img/bigLion.png" alt="" />
         </S.Icon>
-        <S.Span>refresh</S.Span>
+        <S.Right
+          onClick={() =>
+            claim(
+              ADDRESSES.KLNFT,
+              list.map((e) => e.id)
+            )
+          }
+        >
+          <span>CLAIM</span>
+        </S.Right>
       </S.Top>
       <S.Ul>
         {list.map((item, index) => (
@@ -49,6 +78,7 @@ const MiningWrap = () => {
             Option <span>{total}</span>
           </S.Left>
         </div>
+
         <S.Right onClick={() => setIsModal(true)}>
           <span>UNMINING</span>
         </S.Right>

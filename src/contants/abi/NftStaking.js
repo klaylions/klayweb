@@ -1,5 +1,21 @@
 export default [
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_minter",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_startTime",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
     anonymous: false,
     inputs: [
       {

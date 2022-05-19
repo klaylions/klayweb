@@ -8,9 +8,9 @@ import { ADDRESSES } from "../../../contants/addresses";
 import { useAddress } from "../../../hooks/web3/web3-context";
 
 const MiningContainer = () => {
-
   const [isModalToggle, setIsModalToggle] = React.useState(false);
-  
+  const { getWalletNft, stake, refresh, getStakedNft, claim, unstake } = useStakingNft();
+
   React.useEffect(() => {
     if (window.localStorage.getItem("isModalToggle") == "false") {
       setIsModalToggle(false);
@@ -18,8 +18,6 @@ const MiningContainer = () => {
       setIsModalToggle(true);
     }
   }, []);
-
-
 
   const closeModal = (local) => {
     if (local) {
@@ -35,12 +33,21 @@ const MiningContainer = () => {
       <S.Wrap>
         <S.Inner>
           <S.DIV>
-            <NotMiningWrap />
+            <NotMiningWrap
+              getWalletNft={getWalletNft}
+              stake={stake}
+              refresh={refresh}
+            />
           </S.DIV>
         </S.Inner>
         <S.Inner>
           <S.DIV>
-            <MiningWrap />
+            <MiningWrap
+              getStakedNft={getStakedNft}
+              refresh={refresh}
+              claim={claim}
+              unstake={unstake}
+            />
           </S.DIV>
         </S.Inner>
       </S.Wrap>

@@ -7,16 +7,15 @@ import { miningData } from "../../../mock/miningDummy";
 import { useAddress } from "../../../hooks/web3/web3-context";
 import { useStakingNft } from "../../../hooks/staking";
 import { ADDRESSES } from "../../../contants/addresses";
-const NotMiningWrap = () => {
+const NotMiningWrap = ({ getWalletNft, refresh, stake }) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
+
   const [isModal, setIsModal] = useState(false);
-  const { getWalletNft } = useStakingNft();
   const address = useAddress();
 
   useEffect(() => {
     if (!address) return;
-    console.log("in???");
     getWalletNft(ADDRESSES.KLNFT).then((res) => {
       let walletList = [];
       res.ids.forEach((id, i) => {
@@ -27,22 +26,20 @@ const NotMiningWrap = () => {
         });
       });
       setList(walletList);
-      console.log(walletList);
     });
-  }, [address]);
+  }, [address, refresh]);
 
   useEffect(() => {
     let result = list.filter((item) => item.isActive);
-
     setTotal(result.length);
   }, [list]);
-  console.log(list);
   return (
     <S.Container>
       <MiningModal
         closeModal={() => setIsModal(false)}
         selected={list.filter((e) => e.isActive === true)}
         onModal={isModal}
+        stake={stake}
       />
       <S.Top>
         <S.H2>Not mining</S.H2>

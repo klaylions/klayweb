@@ -12,6 +12,7 @@ import * as Pages from "./pages";
 
 // 페이지 이동시 최상단으로 이동
 import ScrollToTop from "./ScrollToTop";
+import AdminPage from "./pages/Admin/AdminPage";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/mining" element={<Pages.MiningPage />} />
           {/* lionsball 페이지 (mmining -> lionsball) */}
           <Route path="/lionsball" element={<Pages.LionsBallPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </>
     </>

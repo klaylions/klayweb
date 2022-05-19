@@ -8,14 +8,14 @@ import * as S from "./style";
 const SubHeader = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { address, connect, disconnect } = useWeb3Context();
+  const { address, connect, disconnect, connected } = useWeb3Context();
 
   React.useEffect(() => {
     console.log(pathname);
   }, []);
 
   const Titles = [
-    { id: 1, text: "STAKING", disabled: false },
+    { id: 1, text: "STAKING", disabled: true },
     { id: 2, text: "MINING", link: "/mining", disabled: false },
     { id: 3, text: "LIONS BALL", link: "/lionsball", disabled: false },
     { id: 4, text: "VOTE", disabled: true },
@@ -39,7 +39,7 @@ const SubHeader = () => {
           </span>
         </S.Btn>
       );
-  }, [address]);
+  }, [address, connected]);
 
   return (
     <>
@@ -53,7 +53,12 @@ const SubHeader = () => {
                 </S.Img>
               </S.Li>
               {Titles.map((item) => (
-                <S.Li key={item.id} onClick={() => navigate(item.link)}>
+                <S.Li
+                  key={item.id}
+                  onClick={() => {
+                    if (item.link) navigate(item.link);
+                  }}
+                >
                   <S.Span
                     active={item.link && pathname === item.link}
                     disabled={item.disabled}
