@@ -6,7 +6,10 @@ import { StartBox, UnMiningModal } from "../..";
 import { miningData2 } from "../../../mock/miningDummy";
 import { useStakingNft } from "../../../hooks/staking";
 import { useAddress } from "../../../hooks/web3/web3-context";
-import { ADDRESSES } from "../../../contants/addresses";
+import {
+  ADDRESSES,
+  getCollectionByPathname,
+} from "../../../contants/addresses";
 const MiningWrap = ({ getStakedNft, refresh, claim, unstake }) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
@@ -16,7 +19,7 @@ const MiningWrap = ({ getStakedNft, refresh, claim, unstake }) => {
 
   useEffect(() => {
     if (!address) return;
-    getStakedNft(ADDRESSES.KLNFT).then((res) => {
+    getStakedNft(getCollectionByPathname()).then((res) => {
       let walletList = [];
       console.log(res);
       res.ids.forEach((id, i) => {
@@ -30,7 +33,7 @@ const MiningWrap = ({ getStakedNft, refresh, claim, unstake }) => {
       setList(walletList);
     });
     // res.ids.}
-  }, [address, refresh]);
+  }, [address, refresh, getCollectionByPathname()]);
 
   useEffect(() => {
     let result = list.filter((item) => item.isActive);
@@ -54,7 +57,7 @@ const MiningWrap = ({ getStakedNft, refresh, claim, unstake }) => {
         <S.Right
           onClick={() =>
             claim(
-              ADDRESSES.KLNFT,
+              getCollectionByPathname(),
               list.map((e) => e.id)
             )
           }

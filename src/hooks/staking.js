@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useCallback, useState } from "react";
 import ERC721 from "../contants/abi/ERC721";
+import Locker from "../contants/abi/Locker";
 import NftStaking from "../contants/abi/NftStaking";
 import { ADDRESSES } from "../contants/addresses";
+import { getUri } from "../helpers/getUri";
 import { useRefresh } from "./refresh";
 import { useAddress, useWeb3Context } from "./web3/web3-context";
 
@@ -43,19 +45,43 @@ export const useStakingNft = () => {
         NftStaking,
         ADDRESSES.STAKING
       );
-      console.log(ADDRESSES.STAKING, collection, tokenIds);
-      const gas = await contract.methods
-        .unstake(address, collection, tokenIds)
-        .estimateGas({
+      try {
+        const gas = await contract.methods
+          .unstake(address, collection, tokenIds)
+          .estimateGas({
+            from: address,
+          });
+        const tx = await contract.methods
+          .unstake(address, collection, tokenIds)
+          .send({
+            from: address,
+            gas,
+          });
+        update();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [address, providerWrapper]
+  );
+  const unlock = useCallback(
+    async (collection) => {
+      const contract = new providerWrapper.klay.Contract(
+        Locker,
+        ADDRESSES.LOCKER
+      );
+      try {
+        const gas = await contract.methods.unlock(collection).estimateGas({
           from: address,
         });
-      const tx = await contract.methods
-        .unstake(address, collection, tokenIds)
-        .send({
+        const tx = await contract.methods.unlock(collection).send({
           from: address,
           gas,
         });
-      update();
+        update();
+      } catch (err) {
+        console.log(err);
+      }
     },
     [address, providerWrapper]
   );
@@ -116,9 +142,7 @@ export const useStakingNft = () => {
               ? r[1]
               : `https://ipfs.io/ipfs/${r[1].slice(7)}`;
             // initUris.push(uri);
-            initUris.push(
-              `https://klaylions.s3.ap-northeast-2.amazonaws.com/image/${incomingTokenTransferEvents[key]}.png`
-            );
+            initUris.push(getUri(collection, incomingTokenTransferEvents[key]));
           }
         });
       });
@@ -194,9 +218,7 @@ export const useStakingNft = () => {
               ? r[1]
               : `https://ipfs.io/ipfs/${r[1].slice(7)}`;
             // initUris.push(uri);
-            initUris.push(
-              `https://klaylions.s3.ap-northeast-2.amazonaws.com/image/${incomingTokenTransferEvents[key]}.png`
-            );
+            initUris.push(getUri(collection, incomingTokenTransferEvents[key]));
           }
         });
       });
@@ -219,6 +241,21 @@ export const useStakingNft = () => {
     },
     [address, provider, providerWrapper]
   );
+  const getLockedNft = useCallback(
+    async (collection) => {
+      const lockerContract = new providerWrapper.klay.Contract(
+        Locker,
+        ADDRESSES.LOCKER
+      );
+      const unlockable = await lockerContract.methods
+        .unlockableNft(address, collection)
+        .call();
+      console.log("unlockable", unlockable);
+      return unlockable;
+    },
+    [address, provider, providerWrapper]
+  );
+
   const isApproved = useCallback(
     async (collection) => {
       const nftContract = new provider.klay.Contract(ERC721, collection);
@@ -255,5 +292,7 @@ export const useStakingNft = () => {
     isApproved,
     approveCollection,
     claim,
+    unlock,
+    getLockedNft,
   };
 };

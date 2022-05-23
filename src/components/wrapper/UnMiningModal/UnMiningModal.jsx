@@ -1,6 +1,10 @@
 import React from "react";
 import Modal from "react-modal";
-import { ADDRESSES } from "../../../contants/addresses";
+import {
+  ADDRESSES,
+  getCollectionByPathname,
+  getCollectionNameByPathname,
+} from "../../../contants/addresses";
 
 import * as S from "./style";
 
@@ -49,7 +53,7 @@ const UnMiningModal = ({ selected, onModal, closeModal, unstake }) => {
         <S.Ul>
           {selected.map((_, index) => (
             <S.Li>
-              <S.Text>KLAYLIONS</S.Text>
+              <S.Text>{getCollectionNameByPathname()}</S.Text>
               <S.Right>
                 <S.RLeft>ID</S.RLeft>
                 <S.RRight>{_.id}</S.RRight>
@@ -83,7 +87,7 @@ const UnMiningModal = ({ selected, onModal, closeModal, unstake }) => {
         <S.Btn
           onClick={async () => {
             await unstake(
-              ADDRESSES.KLNFT,
+              getCollectionByPathname(),
               selected.map((e) => e.id)
             );
             closeModal();

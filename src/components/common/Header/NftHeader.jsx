@@ -5,44 +5,24 @@ import { shortenAddress } from "../../../helpers/shortenAddress";
 import { useAddress, useWeb3Context } from "../../../hooks/web3/web3-context";
 import * as S from "./style";
 
-const SubHeader = () => {
+const NftHeader = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { address, connect, disconnect, connected, providerWrapper } =
     useWeb3Context();
 
-  React.useEffect(() => {
-    if (!address) connect();
-    console.log(pathname);
-  }, []);
-
   const Titles = [
-    { id: 1, text: "STAKING", disabled: true },
-    { id: 2, text: "MINING", link: "/mining", disabled: false },
-    { id: 3, text: "LIONS BALL", disabled: true },
-    // link: "/lionsball",
-    { id: 4, text: "VOTE", disabled: true },
-    { id: 5, text: "MINIGAME", disabled: true },
+    { id: 1, text: "KLAYLIONS", link: "/mining/klaylions", disabled: false },
+    {
+      id: 2,
+      text: "KLAYLIONS LEGENDARY",
+      link: "/mining/klaylionsLegendary",
+      disabled: false,
+    },
+    { id: 3, text: "PARTNER", disabled: true },
+    { id: 4, text: "PARTNER2", disabled: true },
+    { id: 5, text: "PARTNER3", disabled: true },
   ];
-
-  const btnText = useMemo(() => {
-    if (address)
-      return (
-        <S.Btn>
-          <span onClick={disconnect} style={{ cursor: "pointer" }}>
-            {shortenAddress(address)}
-          </span>
-        </S.Btn>
-      );
-    else
-      return (
-        <S.Btn>
-          <span onClick={connect} style={{ cursor: "pointer" }}>
-            CONNECT
-          </span>
-        </S.Btn>
-      );
-  }, [address, connected, providerWrapper]);
 
   return (
     <>
@@ -50,11 +30,6 @@ const SubHeader = () => {
         <S.Wrap>
           <S.Inner>
             <S.Left>
-              <S.Li onClick={() => navigate("/")}>
-                <S.Img>
-                  <img src="/assets/img/logo.png" alt="logo" />
-                </S.Img>
-              </S.Li>
               {Titles.map((item) => (
                 <S.Li
                   key={item.id}
@@ -71,7 +46,6 @@ const SubHeader = () => {
                 </S.Li>
               ))}
             </S.Left>
-            <S.WalletId>{btnText}</S.WalletId>
           </S.Inner>
         </S.Wrap>
       </S.Container>
@@ -79,4 +53,4 @@ const SubHeader = () => {
   );
 };
 
-export default SubHeader;
+export default NftHeader;

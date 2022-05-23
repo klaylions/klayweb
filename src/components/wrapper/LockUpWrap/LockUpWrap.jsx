@@ -4,18 +4,37 @@ import * as S from "./style";
 
 import { StartBox, LockUpModal } from "../..";
 import { miningData3 } from "../../../mock/miningDummy";
-const LockUpWrap = () => {
+import { useAddress } from "../../../hooks/web3/web3-context";
+import {
+  ADDRESSES,
+  getCollectionByPathname,
+} from "../../../contants/addresses";
+import { getUri } from "../../../helpers/getUri";
+import { getTimeFormat } from "../../../helpers/getTimestamp";
+const LockUpWrap = ({ refresh, getLockedNft, unlock }) => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   const [isModal, setIsModal] = useState(false);
+  const address = useAddress();
 
   useEffect(() => {
-    setList(miningData3);
+    if (!address) return;
 
-    return () => {
-      setList([]);
-    };
-  }, []);
+    getLockedNft(getCollectionByPathname()).then((res) => {
+      let lockedList = [];
+      res.forEach((data) => {
+        console.log(data.releaseTime);
+        lockedList.push({
+          releaseTime: getTimeFormat(data.releaseTime),
+          id: data.tokenId,
+          uri: { image: getUri(getCollectionByPathname(), data.tokenId) },
+          canRelease:
+            new Date().getTime() - Number(data.releaseTime * 1000) > 0,
+        });
+      });
+      setList(lockedList);
+    });
+  }, [address, refresh, getCollectionByPathname()]);
 
   useEffect(() => {
     let result = list.filter((item) => item.isActive);
@@ -25,7 +44,12 @@ const LockUpWrap = () => {
 
   return (
     <S.Container>
-      <LockUpModal closeModal={() => setIsModal(false)} onModal={isModal} />
+      <LockUpModal
+        list={list.filter((e) => e.canRelease)}
+        closeModal={() => setIsModal(false)}
+        onModal={isModal}
+        unlock={unlock}
+      />
       <S.Top>
         <S.H2>LockUP~</S.H2>
         <S.Icon>
@@ -37,6 +61,7 @@ const LockUpWrap = () => {
         {list.map((item, index) => (
           <S.Li key={item.id}>
             <StartBox
+              lockup={true}
               list={list}
               setList={setList}
               idx={index}
@@ -56,7 +81,7 @@ const LockUpWrap = () => {
           </S.Left>
         </div>
         <S.Right onClick={() => setIsModal(true)}>
-          <span>CLAIM</span>
+          <span>UNLOCK</span>
         </S.Right>
       </S.Bottom>
     </S.Container>

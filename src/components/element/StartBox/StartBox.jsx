@@ -2,8 +2,12 @@ import React from "react";
 
 import * as S from "./style";
 
-const StartBox = ({ list, setList, idx, data }) => {
+const StartBox = ({ list, setList, idx, data, lockup }) => {
   const { text1, klc, text2 } = data || {};
+  if (lockup) {
+    console.log(list[idx]);
+  }
+
   return (
     <S.Box>
       <S.Container
@@ -53,11 +57,26 @@ const StartBox = ({ list, setList, idx, data }) => {
       <S.TextBox>
         <S.Text1>{text1}</S.Text1>
         <S.KLCDiv>
-          <S.KLCText>MINING KLC</S.KLCText>
-          <S.KLCIcon>
-            <img src="/assets/img/miniLion.png" alt="" />
-          </S.KLCIcon>
-          <S.Price>{list[idx].earned}</S.Price>
+          {lockup ? (
+            <>
+              {list[idx].canRelease ? (
+                <S.KLCText>CAN UNLOCK</S.KLCText>
+              ) : (
+                <>
+                  <S.KLCText> LOCKED </S.KLCText>
+                  <S.Price>{list[idx].releaseTime}</S.Price>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <S.KLCText>MINING KLC</S.KLCText>
+              <S.KLCIcon>
+                <img src="/assets/img/miniLion.png" alt="" />
+              </S.KLCIcon>
+              <S.Price>{list[idx].earned}</S.Price>
+            </>
+          )}
         </S.KLCDiv>
         <S.Text2>{text2}</S.Text2>
       </S.TextBox>

@@ -6,6 +6,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  Navigate,
 } from "react-router-dom";
 
 import * as Pages from "./pages";
@@ -26,10 +27,16 @@ export default function App() {
           {/* connect ( 지갑연결 ) */}
           <Route path="/connect" element={<Pages.ConnectPage />} />
           {/* mining 페이지 (main -> klc) */}
-          <Route path="/mining" element={<Pages.MiningPage />} />
+
+          <Route path="/mining/*" element={<Pages.MiningPage />} />
           {/* lionsball 페이지 (mmining -> lionsball) */}
           <Route path="/lionsball" element={<Pages.LionsBallPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route
+            exact
+            path="/mining"
+            element={<Navigate to="/mining/klaylions" replace />}
+          />
         </Routes>
       </>
     </>

@@ -1,9 +1,14 @@
 import React from "react";
 import Modal from "react-modal";
+import {
+  ADDRESSES,
+  getCollectionByPathname,
+  getCollectionNameByPathname,
+} from "../../../contants/addresses";
 
 import * as S from "./style";
 
-const LockUpModal = ({ onModal, closeModal }) => {
+const LockUpModal = ({ onModal, closeModal, list, unlock }) => {
   const customStyle = {
     overlay: {
       top: 0,
@@ -46,19 +51,19 @@ const LockUpModal = ({ onModal, closeModal }) => {
         </S.Close>
         <S.H2>Are you sure to Claim?</S.H2>
         <S.Ul>
-          {new Array(8).fill("").map((_, index) => (
+          {list.map((_, index) => (
             <S.Li>
-              <S.Text>option</S.Text>
+              <S.Text>{getCollectionNameByPathname()}</S.Text>
               <S.Right>
-                <S.RLeft>Text</S.RLeft>
-                <S.RRight>5 NFT</S.RRight>
+                <S.RLeft>ID</S.RLeft>
+                <S.RRight>{_.id}</S.RRight>
               </S.Right>
             </S.Li>
           ))}
         </S.Ul>
         <S.TotalBox>
           <S.TotalTitle>Total</S.TotalTitle>
-          <S.TotalText>TEXT AREA</S.TotalText>
+          <S.TotalText>{list.length}</S.TotalText>
         </S.TotalBox>
         <S.AlertTextBox>
           <S.AlertText>
@@ -79,7 +84,14 @@ const LockUpModal = ({ onModal, closeModal }) => {
             </S.AlertMent>
           </S.AlertText>
         </S.AlertTextBox>
-        <S.Btn onClick={() => closeModal()}>Claim</S.Btn>
+        <S.Btn
+          onClick={async () => {
+            await unlock(getCollectionByPathname());
+            closeModal();
+          }}
+        >
+          Claim
+        </S.Btn>
       </S.Container>
     </Modal>
   );
